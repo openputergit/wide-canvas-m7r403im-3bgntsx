@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhodkeTechnologies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .sliding-text {
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 1s ease-out, opacity 1s ease-out;
+        }
+
+        .sliding-text.visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(45deg, #2a2a72, #009ffd);
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4">
+        <div class="glass-effect rounded-xl p-8 md:p-16 text-center">
+            <h1 class="text-4xl md:text-7xl font-bold text-white tracking-wider">
+                <span class="inline-block">ghodke</span>
+                <span class="sliding-text inline-block">Technologies</span>
+            </h1>
+        </div>
+    </div>
+
+    <script>
+        // Initialize intersection observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelector('.sliding-text').classList.add('visible');
+                } else {
+                    document.querySelector('.sliding-text').classList.remove('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        // Observe the container
+        observer.observe(document.querySelector('.glass-effect'));
+
+        // Handle scroll events for smoother animation
+        let lastScrollPosition = 0;
+        window.addEventListener('scroll', () => {
+            const currentScrollPosition = window.pageYOffset;
+            if (currentScrollPosition < lastScrollPosition) {
+                // Scrolling up
+                document.querySelector('.sliding-text').classList.add('visible');
+            }
+            lastScrollPosition = currentScrollPosition;
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
